@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Función para obtener pedidos del backend
   async function obtenerPedidos() {
     try {
-      const response = await fetch('http://localhost:3000/api/pedido/obtenerpedidos');
+      const response = await fetch('https://brc.onrender.com/api/pedido/obtenerpedidos');
 
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status}`);
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Función para eliminar un pedido
   async function eliminarPedido(id) {
     try {
-      const response = await fetch(`http://localhost:3000/api/pedido/elimpedido/${id}`, {
+      const response = await fetch(`https://brc.onrender.com/api/pedido/elimpedido/${id}`, {
         method: 'DELETE'
       });
 
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Función para obtener pedido por ID
   async function obtenerPedidoPorId(id) {
     try {
-      const response = await fetch(`http://localhost:3000/api/pedido/pedido/${id}`);
+      const response = await fetch(`https://brc.onrender.com/api/pedido/pedido/${id}`);
       
       if (!response.ok) {
         throw new Error(`Pedido no encontrado: ${response.status}`);
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Función para actualizar un pedido
   async function actualizarPedido(id, data) {
     try {
-      const response = await fetch(`http://localhost:3000/api/pedido/actpedido/${id}`, {
+      const response = await fetch(`https://brc.onrender.com/api/pedido/actpedido/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/api/pedido/crearpedido', {
+      const response = await fetch('https://brc.onrender.com/api/pedido/crearpedido', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
