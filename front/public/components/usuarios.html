@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <link rel="stylesheet" href="../css/pedido.css">
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <h2>Borcelle Dashboard</h2>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="usuarios.html" onclick="mostrarVista('usuarios')">Usuarios</a></li>
+                    <li><a href="reposteros.html" onclick="mostrarVista('reposteros')">Reposteros</a></li>
+                    <li><a href="pasteles.html" onclick="mostrarVista('pasteles')">Pasteles</a></li>
+                    <li><a href="pedidos.html" onclick="mostrarVista('pedidos')">Pedidos</a></li>
+                    <li><a href="pastelPersonalizado.html" onclick="mostrarVista('pastelesPersonalizados')">Pasteles Personalizados</a></li>
+                    <li><a href="resenas.html" onclick="mostrarVista('reseñas')">Reseñas</a></li>
+                    <li><a href="citas.html" onclick="mostrarVista('citas')">Cita</a></li>
+                    <li><a href="categorias.html" onclick="mostrarVista('categorias')">Categorias</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header>
+                <h1>Lista de Usuarios</h1>
+            </header>
+            <section id="contenido">
+                <div id="buscador">
+                    <input type="number" id="buscar-id" placeholder="Buscar Usuario por ID">
+                    <button id="buscar-usuario-btn">Buscar</button>
+                </div>
+
+                <div id="tabla-usuarios">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Usuario</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Dirección</th>
+                                <th>Teléfono</th>
+                                <th>Tipo Usuario</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div id="formulario-crear">
+                    <h2>Crear Usuario</h2>
+                    <input type="text" id="nombre" placeholder="Nombre">
+                    <input type="email" id="correo" placeholder="Correo">
+                    <input type="password" id="contrasena" placeholder="Contraseña">
+                    <input type="text" id="direccion" placeholder="Dirección">
+                    <input type="text" id="telefono" placeholder="Teléfono">
+                    <select id="tipo-usuario">
+                        <option value="Cliente">Cliente</option>
+                        <option value="Repostero">Repostero</option>
+                    </select>
+                    <button id="crear-usuario-btn">Crear Usuario</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="../js/usuarios.js"></script>
+</body>
+</html>

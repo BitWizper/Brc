@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Pedidos</title>
+    <link rel="stylesheet" href="../css/pedido.css">
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <h2>Borcelle Dashboard</h2>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="usuarios.html" onclick="mostrarVista('usuarios')">Usuarios</a></li>
+                    <li><a href="reposteros.html" onclick="mostrarVista('reposteros')">Reposteros</a></li>
+                    <li><a href="pasteles.html" onclick="mostrarVista('pasteles')">Pasteles</a></li>
+                    <li><a href="pedidos.html" onclick="mostrarVista('pedidos')">Pedidos</a></li>
+                    <li><a href="pastelPersonalizado.html" onclick="mostrarVista('pastelesPersonalizados')">Pasteles Personalizados</a></li>
+                    <li><a href="resenas.html" onclick="mostrarVista('reseñas')">Reseñas</a></li>
+                    <li><a href="citas.html" onclick="mostrarVista('citas')">Cita</a></li>
+                    <li><a href="categorias.html" onclick="mostrarVista('categorias')">Categorias</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header>
+                <h1>Lista de Pedidos</h1>
+            </header>
+            <section id="contenido">
+                <!-- Buscador de Pedido por ID -->
+                <div id="buscador">
+                    <input type="number" id="buscar-id" placeholder="Buscar pedido por ID" />
+                    <button id="buscar-pedido-btn">Buscar</button>
+                </div>
+
+                <!-- Tabla de Pedidos -->
+                <table id="tabla-pedidos">
+                    <thead>
+                        <tr>
+                            <th>ID Pedido</th>
+                            <th>ID Usuario</th>
+                            <th>ID Repostero</th>
+                            <th>ID Pastel</th>
+                            <th>Dirección</th>
+                            <th>Fecha de Entrega</th>
+                            <th>Fecha de Pedido</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos de los pedidos se insertarán aquí mediante JavaScript -->
+                    </tbody>
+                </table>
+
+                <!-- Formulario para crear un nuevo pedido -->
+                <div id="crear-pedido">
+                    <h3>Crear Nuevo Pedido</h3>
+                    <input type="number" id="id-usuario" placeholder="ID Usuario" />
+                    <input type="number" id="id-repostero" placeholder="ID Repostero" />
+                    <input type="number" id="id-pastel" placeholder="ID Pastel" />
+                    <input type="text" id="direccion" placeholder="Dirección" />
+                    <input type="datetime-local" id="fecha-entrega" placeholder="Fecha de Entrega" />
+                    <input type="datetime-local" id="fecha-pedido" placeholder="Fecha de Pedido" />
+                    <button id="crear-pedido-btn">Crear Pedido</button>
+                </div>
+
+                <!-- Formulario para actualizar un pedido -->
+                <div id="actualizar">
+                    <h3>Actualizar Pedido</h3>
+                    <input type="number" id="id-pedido-update" placeholder="ID Pedido a Actualizar" />
+                    <input type="text" id="direccion-update" placeholder="Nueva Dirección" />
+                    <button id="actualizar-pedido-btn">Actualizar Pedido</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="../js/pedidos.js"></script>
+</body>
+</html>

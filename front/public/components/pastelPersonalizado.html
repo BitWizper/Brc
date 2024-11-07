@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Pasteles Personalizados</title>
+    <link rel="stylesheet" href="../css/pedido.css">
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <h2>Barcell Dashboard</h2>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="usuarios.html" onclick="mostrarVista('usuarios')">Usuarios</a></li>
+                    <li><a href="reposteros.html" onclick="mostrarVista('reposteros')">Reposteros</a></li>
+                    <li><a href="pasteles.html" onclick="mostrarVista('pasteles')">Pasteles</a></li>
+                    <li><a href="components/pedidos.html" onclick="mostrarVista('pedidos')">Pedidos</a></li>
+                    <li><a href="pastelPersonalizado.html" onclick="mostrarVista('pastelesPersonalizados')">Pasteles Personalizados</a></li>
+                    <li><a href="resenas.html" onclick="mostrarVista('reseñas')">Reseñas</a></li>
+                    <li><a href="citas.html" onclick="mostrarVista('citas')">Cita</a></li>
+                    <li><a href="categorias.html" onclick="mostrarVista('categorias')">Categorias</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header>
+                <h1>Gestión de Pasteles Personalizados</h1>
+            </header>
+            <section id="contenido">
+                <div id="buscador">
+                    <input type="number" id="buscar-id" placeholder="Buscar Pastel Personalizado por ID">
+                    <button id="buscar-pastelPersonalizado-btn">Buscar</button>
+                </div>
+
+                <div id="tabla-pastelesPersonalizados">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Bizcocho</th>
+                                <th>Relleno</th>
+                                <th>Decoraciones</th>
+                                <th>Precio</th>
+                                <th>Fecha de Diseño</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div id="formulario-crear">
+                    <h2>Crear Pastel Personalizado</h2>
+                    <input type="text" id="bizcocho" placeholder="Bizcocho" required>
+                    <input type="text" id="relleno" placeholder="Relleno" required>
+                    <textarea id="decoraciones" placeholder="Decoraciones"></textarea>
+                    <input type="number" id="precio" placeholder="Precio" required step="0.01">
+                    <button id="crear-pastelPersonalizado-btn">Crear Pastel Personalizado</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="../js/pastelPersonalizado.js"></script>
+</body>
+</html>

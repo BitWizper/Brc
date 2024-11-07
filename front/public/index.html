@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Gestión - Borcelle</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <h2>Borcelle Dashboard</h2>
+            <nav>
+                <ul>
+                    <li><a href="components/usuarios.html" onclick="mostrarVista('usuarios')">Usuarios</a></li>
+                    <li><a href="components/reposteros.html" onclick="mostrarVista('reposteros')">Reposteros</a></li>
+                    <li><a href="components/pasteles.html" onclick="mostrarVista('pasteles')">Pasteles</a></li>
+                    <li><a href="components/pedidos.html" onclick="mostrarVista('pedidos')">Pedidos</a></li>
+                    <li><a href="components/pastelPersonalizado.html" onclick="mostrarVista('pastelesPersonalizados')">Pasteles Personalizados</a></li>
+                    <li><a href="components/resenas.html" onclick="mostrarVista('reseñas')">Reseñas</a></li>
+                    <li><a href="components/citas.html" onclick="mostrarVista('citas')">Cita</a></li>
+                    <li><a href="components/categorias.html" onclick="mostrarVista('categorias')">Categorias</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header>
+                <h1 id="titulo-seccion">Dashboard</h1>
+            </header>
+            <section id="contenido"></section>
+        </main>
+    </div>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

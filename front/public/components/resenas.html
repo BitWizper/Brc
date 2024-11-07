@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Reseñas</title>
+    <link rel="stylesheet" href="../css/pedido.css">
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <h2>Borcelle Dashboard</h2>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="usuarios.html" onclick="mostrarVista('usuarios')">Usuarios</a></li>
+                    <li><a href="reposteros.html" onclick="mostrarVista('reposteros')">Reposteros</a></li>
+                    <li><a href="pasteles.html" onclick="mostrarVista('pasteles')">Pasteles</a></li>
+                    <li><a href="pedidos.html" onclick="mostrarVista('pedidos')">Pedidos</a></li>
+                    <li><a href="pastelPersonalizado.html" onclick="mostrarVista('pastelesPersonalizados')">Pasteles Personalizados</a></li>
+                    <li><a href="resenas.html" onclick="mostrarVista('reseñas')">Reseñas</a></li>
+                    <li><a href="citas.html" onclick="mostrarVista('citas')">Cita</a></li>
+                    <li><a href="categorias.html" onclick="mostrarVista('categorias')">Categorias</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header>
+                <h1>Lista de Reseñas</h1>
+            </header>
+            <section id="contenido">
+                <!-- Buscador de Reseña por ID -->
+                <div id="buscador">
+                    <input type="number" id="buscar-id" placeholder="Buscar reseña por ID" />
+                    <button id="buscar-resena-btn">Buscar</button>
+                </div>
+
+                <!-- Tabla de Reseñas -->
+                <table id="tabla-resenas">
+                    <thead>
+                        <tr>
+                            <th>ID Reseña</th>
+                            <th>ID Usuario</th>
+                            <th>Comentario</th>
+                            <th>Calificación</th>
+                            <th>Fecha de Reseña</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos de las reseñas se insertarán aquí mediante JavaScript -->
+                    </tbody>
+                </table>
+
+                <!-- Formulario para crear una nueva reseña -->
+                <div id="crear-resena">
+                    <h3>Crear Nueva Reseña</h3>
+                    <input type="number" id="id-usuario" placeholder="ID Usuario" />
+                    <input type="text" id="comentario" placeholder="Comentario" />
+                    <input type="number" id="calificacion" placeholder="Calificación" min="1" max="5" />
+                    <input type="datetime-local" id="fecha-resena" placeholder="Fecha de Reseña" />
+                    <button id="crear-resena-btn">Crear Reseña</button>
+                </div>
+
+                <!-- Formulario para actualizar una reseña -->
+                <div id="actualizar">
+                    <h3>Actualizar Reseña</h3>
+                    <input type="number" id="id-resena-update" placeholder="ID Reseña a Actualizar" />
+                    <input type="text" id="comentario-update" placeholder="Nuevo Comentario" />
+                    <button id="actualizar-resena-btn">Actualizar Reseña</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="../js/resenas.js"></script>
+</body>
+</html>

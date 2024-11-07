@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Reposteros</title>
+    <link rel="stylesheet" href="../css/pedido.css">
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <h2>Barcell Dashboard</h2>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="usuarios.html" onclick="mostrarVista('usuarios')">Usuarios</a></li>
+                    <li><a href="reposteros.html" onclick="mostrarVista('reposteros')">Reposteros</a></li>
+                    <li><a href="pasteles.html" onclick="mostrarVista('pasteles')">Pasteles</a></li>
+                    <li><a href="pedidos.html" onclick="mostrarVista('pedidos')">Pedidos</a></li>
+                    <li><a href="pastelPersonalizado.html" onclick="mostrarVista('pastelesPersonalizados')">Pasteles Personalizados</a></li>
+                    <li><a href="resenas.html" onclick="mostrarVista('reseñas')">Reseñas</a></li>
+                    <li><a href="citas.html" onclick="mostrarVista('citas')">Cita</a></li>
+                    <li><a href="categorias.html" onclick="mostrarVista('categorias')">Categorias</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header>
+                <h1>Gestión de Reposteros</h1>
+            </header>
+            <section id="contenido">
+                <div id="buscador">
+                    <input type="number" id="buscar-id" placeholder="Buscar Repostero por ID">
+                    <button id="buscar-repostero-btn">Buscar</button>
+                </div>
+
+                <div id="tabla-reposteros">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Repostero</th>
+                                <th>Nombre Negocio</th>
+                                <th>Ubicación</th>
+                                <th>Especialidades</th>
+                                <th>Portafolio</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div id="formulario-crear">
+                    <h2>Crear Repostero</h2>
+                    <input type="text" id="nombre" placeholder="Nombre Negocio" required>
+                    <input type="text" id="especialidad" placeholder="Especialidades" required>
+                    <input type="text" id="ubicacion" placeholder="Ubicación" required>
+                    <input type="url" id="portafolio-url" placeholder="URL del Portafolio" required>
+                    <button id="crear-repostero-btn">Crear Repostero</button>
+                </div>
+
+                <div id="formulario-actualizar">
+                    <h2>Actualizar Repostero</h2>
+                    <input type="number" id="id-repostero-update" placeholder="ID Repostero" required>
+                    <input type="text" id="nombre-update" placeholder="Nombre Negocio" required>
+                    <input type="text" id="especialidad-update" placeholder="Especialidades" required>
+                    <button id="actualizar-repostero-btn">Actualizar Repostero</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="../js/reposteros.js"></script>
+</body>
+</html>
