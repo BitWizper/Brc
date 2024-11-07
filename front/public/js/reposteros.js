@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     async function obtenerReposteros() {
       try {
-        const response = await fetch('http://localhost:3000/api/repostero/obtenereposteros');
+        const response = await fetch('https://brc.onrender.com/api/repostero/obtenereposteros');
         if (!response.ok) throw new Error(`Error en la solicitud: ${response.status}`);
         
         const reposteros = await response.json();
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     async function eliminarRepostero(id) {
       try {
-        const response = await fetch(`http://localhost:3000/api/repostero/elimreposteros/${id}`, {
+        const response = await fetch(`https://brc.onrender.com/api/repostero/elimreposteros/${id}`, {
           method: 'DELETE'
         });
     
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     async function obtenerReposteroPorId(id) {
       try {
-        const response = await fetch(`http://localhost:3000/api/repostero/reposteros/${id}`);
+        const response = await fetch(`https://brc.onrender.com/api/repostero/reposteros/${id}`);
         if (!response.ok) throw new Error(`Repostero no encontrado: ${response.status}`);
         
         const repostero = await response.json();
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     async function actualizarRepostero(id, data) {
       try {
-        const response = await fetch(`http://localhost:3000/api/repostero/actreposteros/${id}`, {
+        const response = await fetch(`https://brc.onrender.com/api/repostero/actreposteros/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
   
       try {
-        const response = await fetch('http://localhost:3000/api/repostero/creareposteros', {
+        const response = await fetch('https://brc.onrender.com/api/repostero/creareposteros', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
