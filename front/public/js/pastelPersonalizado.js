@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function obtenerPastelesPersonalizados() {
         try {
-            const response = await fetch('http://localhost:3000/api/PastelPersonalizado/obtenerpastelPersonalizado');
+            const response = await fetch('https://brc.onrender.com/api/PastelPersonalizado/obtenerpastelPersonalizado');
             if (!response.ok) throw new Error(`Error en la solicitud: ${response.status}`);
             
             const pastelesPersonalizados = await response.json();
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function eliminarPastelPersonalizado(id) {
         try {
-            const response = await fetch(`http://localhost:3000/api/PastelPersonalizado/elimpastelPersonalizado/${id}`, {
+            const response = await fetch(`https://brc.onrender.com/api/PastelPersonalizado/elimpastelPersonalizado/${id}`, {
                 method: 'DELETE'
             });
 
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function obtenerPastelPersonalizadoPorId(id) {
         try {
-            const response = await fetch(`http://localhost:3000/api/PastelPersonalizado/pastelPersonalizado/${id}`);
+            const response = await fetch(`https://brc.onrender.com/api/PastelPersonalizado/pastelPersonalizado/${id}`);
             if (!response.ok) throw new Error(`Pastel personalizado no encontrado: ${response.status}`);
             
             const pastel = await response.json();
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = { Bizcocho: bizcocho, Relleno: relleno, Decoraciones: decoraciones, Precio: precio };
 
         try {
-            const response = await fetch('http://localhost:3000/api/PastelPersonalizado/crearpastelPersonalizado', {
+            const response = await fetch('https://brc.onrender.com/api/PastelPersonalizado/crearpastelPersonalizado', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
