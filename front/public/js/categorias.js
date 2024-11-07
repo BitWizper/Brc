@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function obtenerCategorias() {
         try {
-            const response = await fetch('http://localhost:3000/api/categoria/obtenercategorias');
+            const response = await fetch('https://brc.onrender.com/api/categoria/obtenercategorias');
             if (!response.ok) throw new Error(`Error en la solicitud: ${response.status}`);
             
             const categorias = await response.json();
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function eliminarCategoria(id) {
         try {
-            const response = await fetch(`http://localhost:3000/api/categoria/elimcategorias/${id}`, {
+            const response = await fetch(`https://brc.onrender.com/api/categoria/elimcategorias/${id}`, {
                 method: 'DELETE'
             });
 
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function obtenerCategoriaPorId(id) {
         try {
-            const response = await fetch(`http://localhost:3000/api/categoria/categorias/${id}`);
+            const response = await fetch(`https://brc.onrender.com/api/categoria/categorias/${id}`);
             if (!response.ok) throw new Error(`Categoría no encontrada: ${response.status}`);
             
             const categoria = await response.json();
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function actualizarCategoria(id, data) {
         try {
-            const response = await fetch(`http://localhost:3000/api/categoria/actcategorias/${id}`, {
+            const response = await fetch(`https://brc.onrender.com/api/categoria/actcategorias/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = { nombre };
 
         try {
-            const response = await fetch('http://localhost:3000/api/categoria/crearcategorias', {
+            const response = await fetch('https://brc.onrender.com/api/categoria/crearcategorias', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
