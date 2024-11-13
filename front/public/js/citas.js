@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let citas = []; // Almacena todas las citas obtenidas
     let currentPage = 1;
-    const itemsPerPage = 500;
+    const itemsPerPage = 10;
 
     async function obtenerCitas() {
         try {
