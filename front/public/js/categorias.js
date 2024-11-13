@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let categorias = []; // Almacena todas las categorías obtenidas
     let currentPage = 1;
-    const itemsPerPage = 500;
+    const itemsPerPage = 10;
 
     async function obtenerCategorias() {
         try {
