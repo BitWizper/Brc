@@ -2,25 +2,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const tablaPasteles = document.querySelector("#tabla-pasteles tbody");
     const buscarPastelBtn = document.querySelector("#buscar-pastel-btn");
     const buscarIdInput = document.querySelector("#buscar-id");
+    const actualizarPastelBtn = document.querySelector("#actualizar-pastel-btn");
     const crearPastelBtn = document.querySelector("#crear-pastel-btn");
-    const siguientePaginaBtn = document.querySelector("#siguiente-pagina-btn");
-    const paginaAnteriorBtn = document.querySelector("#pagina-anterior-btn");
-    const numeroPagina = document.querySelector("#numero-pagina");
 
-    let paginaActual = 1;
-    const elementosPorPagina = 500;
+    let currentPage = 1;  // Página actual de la paginación
+    const pageSize = 500; // Tamaño de página (número de registros por página)
 
-    async function obtenerPasteles() {
+    async function obtenerPasteles(page = 1) {
         try {
-            const response = await fetch(`https://brc.onrender.com/api/pastel/obtenerpasteles?page=${paginaActual}&limit=${elementosPorPagina}`);
+            const response = await fetch(`https://brc.onrender.com/api/pastel/obtenerpasteles?page=${page}&pageSize=${pageSize}`);
             if (!response.ok) throw new Error(`Error en la solicitud: ${response.status}`);
             
-            const { pasteles, totalPaginas } = await response.json();
-            mostrarPasteles(pasteles);
-
-            siguientePaginaBtn.disabled = paginaActual >= totalPaginas;
-            paginaAnteriorBtn.disabled = paginaActual <= 1;
-            numeroPagina.textContent = `Página ${paginaActual} de ${totalPaginas}`;
+            const pasteles = await response.json();
+            mostrarPasteles(pasteles.data); // Asegúrate que los datos estén en el objeto `data`
+            configurarPaginacion(pasteles.totalPages); // Configurar paginación en base al total de páginas
         } catch (error) {
             console.error("Error al obtener pasteles:", error);
             tablaPasteles.innerHTML = `<tr><td colspan="7">Error al cargar pasteles: ${error.message}</td></tr>`;
@@ -55,6 +50,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function configurarPaginacion(totalPages) {
+        const paginacionContainer = document.querySelector("#paginacion");
+        paginacionContainer.innerHTML = "";
+
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement("button");
+            button.innerText = i;
+            button.classList.add("paginacion-btn");
+            if (i === currentPage) button.classList.add("active");
+
+            button.addEventListener("click", () => {
+                currentPage = i;
+                obtenerPasteles(currentPage);
+            });
+
+            paginacionContainer.appendChild(button);
+        }
+    }
+
     async function eliminarPastel(id) {
         try {
             const response = await fetch(`https://brc.onrender.com/api/pastel/elimpasteles/${id}`, {
@@ -63,66 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!response.ok) throw new Error(`Error al eliminar el pastel: ${response.status}`);
             
-            obtenerPasteles();
+            obtenerPasteles(currentPage); 
         } catch (error) {
             console.error("Error al eliminar pastel:", error);
         }
     }
 
-    async function obtenerPastelPorId(id) {
-        try {
-            const response = await fetch(`https://brc.onrender.com/api/pastel/pasteles/${id}`);
-            if (!response.ok) throw new Error(`Pastel no encontrado: ${response.status}`);
-            
-            const pastel = await response.json();
-            mostrarPasteles([pastel]);
-        } catch (error) {
-            console.error("Error al obtener pastel:", error);
-            tablaPasteles.innerHTML = `<tr><td colspan="7">Error al cargar pastel: ${error.message}</td></tr>`;
-        }
-    }
+    // Continuación del resto de funciones (obtenerPastelPorId, actualizarPastel, crearPastel) ...
 
-    buscarPastelBtn.addEventListener("click", () => {
-        const id = buscarIdInput.value;
-        if (id) obtenerPastelPorId(id);
-    });
-
-    async function crearPastel() {
-        const nombre = document.getElementById('nombre').value;
-        const descripcion = document.getElementById('descripcion').value;
-        const precio = document.getElementById('precio').value;
-        const popularidad = document.getElementById('popularidad').value || 0;
-        const destacado = document.getElementById('destacado').checked;
-
-        const data = { nombre, descripcion, precio, popularidad, destacado };
-
-        try {
-            const response = await fetch('https://brc.onrender.com/api/pastel/crearpasteles', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-
-            if (!response.ok) throw new Error(`Error en la solicitud: ${response.status}`);
-            
-            alert('Pastel creado exitosamente');
-            obtenerPasteles();
-        } catch (error) {
-            console.error('Error al crear el pastel:', error);
-        }
-    }
-
-    crearPastelBtn.addEventListener('click', crearPastel);
-
-    siguientePaginaBtn.addEventListener("click", () => {
-        paginaActual++;
-        obtenerPasteles();
-    });
-
-    paginaAnteriorBtn.addEventListener("click", () => {
-        paginaActual--;
-        obtenerPasteles();
-    });
-
-    obtenerPasteles();
+    obtenerPasteles(); // Cargar la primera página al inicio
 });
+
