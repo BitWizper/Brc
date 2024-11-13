@@ -3,28 +3,46 @@ document.addEventListener("DOMContentLoaded", () => {
     const buscarUsuarioBtn = document.querySelector("#buscar-usuario-btn");
     const buscarIdInput = document.querySelector("#buscar-id");
     const crearUsuarioBtn = document.querySelector("#crear-usuario-btn");
+    const prevPageBtn = document.getElementById("prev-page");
+    const nextPageBtn = document.getElementById("next-page");
+    const pageInfo = document.getElementById("page-info");
+
+    let usuarios = [];
+    let currentPage = 1;
+    const itemsPerPage = 10;
 
     // Función para obtener usuarios del backend
     async function obtenerUsuarios() {
         try {
             const response = await fetch('https://brc.onrender.com/api/usuario/obtenerusuarios');
             if (!response.ok) throw new Error(`Error en la solicitud: ${response.status}`);
-            const usuarios = await response.json();
-            mostrarUsuarios(usuarios);
+            usuarios = await response.json();
+            renderPage(currentPage); // Mostrar la primera página
         } catch (error) {
             console.error("Error al obtener usuarios:", error);
             tablaUsuarios.innerHTML = `<tr><td colspan="7">Error al cargar usuarios: ${error.message}</td></tr>`;
         }
     }
 
+    function renderPage(page) {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const pageItems = usuarios.slice(start, end);
+
+        mostrarUsuarios(pageItems);
+        pageInfo.textContent = `Página ${page}`;
+        prevPageBtn.disabled = page === 1;
+        nextPageBtn.disabled = end >= usuarios.length;
+    }
+
     // Función para mostrar los usuarios en la tabla
-    function mostrarUsuarios(usuarios) {
-        if (!usuarios || usuarios.length === 0) {
+    function mostrarUsuarios(pageItems) {
+        if (!pageItems || pageItems.length === 0) {
             tablaUsuarios.innerHTML = '<tr><td colspan="7">No hay usuarios para mostrar.</td></tr>';
             return;
         }
 
-        tablaUsuarios.innerHTML = usuarios.map(usuario => {
+        tablaUsuarios.innerHTML = pageItems.map(usuario => {
             return `
                 <tr>
                     <td>${usuario.id_usuario || "ID no disponible"}</td>
@@ -46,6 +64,20 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
+
+    prevPageBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPage(currentPage);
+        }
+    });
+
+    nextPageBtn.addEventListener("click", () => {
+        if (currentPage * itemsPerPage < usuarios.length) {
+            currentPage++;
+            renderPage(currentPage);
+        }
+    });
 
     // Función para eliminar un usuario
     async function eliminarUsuario(id) {
@@ -110,3 +142,4 @@ document.addEventListener("DOMContentLoaded", () => {
     // Llama a la función original para obtener todos los usuarios al cargar la página
     obtenerUsuarios();
 });
+
