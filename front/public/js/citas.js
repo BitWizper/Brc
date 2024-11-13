@@ -3,27 +3,45 @@ document.addEventListener("DOMContentLoaded", () => {
     const buscarCitaBtn = document.querySelector("#buscar-cita-btn");
     const buscarIdInput = document.querySelector("#buscar-id");
     const crearCitaBtn = document.querySelector("#crear-cita-btn");
+    const prevPageBtn = document.getElementById("prev-page");
+    const nextPageBtn = document.getElementById("next-page");
+    const pageInfo = document.getElementById("page-info");
+
+    let citas = []; // Almacena todas las citas obtenidas
+    let currentPage = 1;
+    const itemsPerPage = 500;
 
     async function obtenerCitas() {
         try {
             const response = await fetch('https://brc.onrender.com/api/cita/obtenercitas');
             if (!response.ok) throw new Error(`Error en la solicitud: ${response.status}`);
 
-            const citas = await response.json();
-            mostrarCitas(citas);
+            citas = await response.json();
+            renderPage(currentPage); // Mostrar la primera página
         } catch (error) {
             console.error("Error al obtener citas:", error);
             tablaCitas.innerHTML = `<tr><td colspan="6">Error al cargar citas: ${error.message}</td></tr>`;
         }
     }
 
-    function mostrarCitas(citas) {
-        if (!citas || citas.length === 0) {
+    function renderPage(page) {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const pageItems = citas.slice(start, end);
+
+        mostrarCitas(pageItems);
+        pageInfo.textContent = `Página ${page}`;
+        prevPageBtn.disabled = page === 1;
+        nextPageBtn.disabled = end >= citas.length;
+    }
+
+    function mostrarCitas(pageItems) {
+        if (!pageItems || pageItems.length === 0) {
             tablaCitas.innerHTML = '<tr><td colspan="6">No hay citas para mostrar.</td></tr>';
             return;
         }
 
-        const citasHTML = citas.map(cita => `
+        const citasHTML = pageItems.map(cita => `
             <tr>
                 <td>${cita.id_cita}</td>
                 <td>${cita.id_usuario}</td>
@@ -43,6 +61,25 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
+
+    prevPageBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPage(currentPage);
+        }
+    });
+
+    nextPageBtn.addEventListener("click", () => {
+        if (currentPage * itemsPerPage < citas.length) {
+            currentPage++;
+            renderPage(currentPage);
+        }
+    });
+
+    buscarCitaBtn.addEventListener("click", () => {
+        const id = buscarIdInput.value;
+        if (id) obtenerCitaPorId(id);
+    });
 
     async function eliminarCita(id) {
         try {
@@ -70,11 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
             tablaCitas.innerHTML = `<tr><td colspan="6">Error al cargar cita: ${error.message}</td></tr>`;
         }
     }
-
-    buscarCitaBtn.addEventListener("click", () => {
-        const id = buscarIdInput.value;
-        if (id) obtenerCitaPorId(id);
-    });
 
     async function crearCita() {
         const id_usuario = document.getElementById('id-usuario').value;
