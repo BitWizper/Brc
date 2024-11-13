@@ -3,27 +3,45 @@ document.addEventListener("DOMContentLoaded", () => {
     const buscarPastelPersonalizadoBtn = document.querySelector("#buscar-pastelPersonalizado-btn");
     const buscarIdInput = document.querySelector("#buscar-id");
     const crearPastelPersonalizadoBtn = document.querySelector("#crear-pastelPersonalizado-btn");
+    const prevPageBtn = document.getElementById("prev-page");
+    const nextPageBtn = document.getElementById("next-page");
+    const pageInfo = document.getElementById("page-info");
+
+    let pastelesPersonalizados = []; // Almacena todos los pasteles personalizados obtenidos
+    let currentPage = 1;
+    const itemsPerPage = 500;
 
     async function obtenerPastelesPersonalizados() {
         try {
             const response = await fetch('https://brc.onrender.com/api/PastelPersonalizado/obtenerpastelPersonalizado');
             if (!response.ok) throw new Error(`Error en la solicitud: ${response.status}`);
             
-            const pastelesPersonalizados = await response.json();
-            mostrarPastelesPersonalizados(pastelesPersonalizados);
+            pastelesPersonalizados = await response.json();
+            renderPage(currentPage); // Mostrar la primera página
         } catch (error) {
             console.error("Error al obtener pasteles personalizados:", error);
             tablaPastelesPersonalizados.innerHTML = `<tr><td colspan="7">Error al cargar pasteles personalizados: ${error.message}</td></tr>`;
         }
     }
 
-    function mostrarPastelesPersonalizados(pastelesPersonalizados) {
-        if (!pastelesPersonalizados || pastelesPersonalizados.length === 0) {
+    function renderPage(page) {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const pageItems = pastelesPersonalizados.slice(start, end);
+
+        mostrarPastelesPersonalizados(pageItems);
+        pageInfo.textContent = `Página ${page}`;
+        prevPageBtn.disabled = page === 1;
+        nextPageBtn.disabled = end >= pastelesPersonalizados.length;
+    }
+
+    function mostrarPastelesPersonalizados(pageItems) {
+        if (!pageItems || pageItems.length === 0) {
             tablaPastelesPersonalizados.innerHTML = '<tr><td colspan="7">No hay pasteles personalizados para mostrar.</td></tr>';
             return;
         }
 
-        const pastelesHTML = pastelesPersonalizados.map(pastel => `
+        const pastelesHTML = pageItems.map(pastel => `
             <tr>
                 <td>${pastel.id_pastelPersonalizado}</td>
                 <td>${pastel.Bizcocho}</td>
@@ -44,6 +62,25 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
+
+    prevPageBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPage(currentPage);
+        }
+    });
+
+    nextPageBtn.addEventListener("click", () => {
+        if (currentPage * itemsPerPage < pastelesPersonalizados.length) {
+            currentPage++;
+            renderPage(currentPage);
+        }
+    });
+
+    buscarPastelPersonalizadoBtn.addEventListener("click", () => {
+        const id = buscarIdInput.value;
+        if (id) obtenerPastelPersonalizadoPorId(id);
+    });
 
     async function eliminarPastelPersonalizado(id) {
         try {
@@ -71,11 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
             tablaPastelesPersonalizados.innerHTML = `<tr><td colspan="7">Error al cargar pastel personalizado: ${error.message}</td></tr>`;
         }
     }
-
-    buscarPastelPersonalizadoBtn.addEventListener("click", () => {
-        const id = buscarIdInput.value;
-        if (id) obtenerPastelPersonalizadoPorId(id);
-    });
 
     async function crearPastelPersonalizado() {
         const bizcocho = document.getElementById('bizcocho').value;
