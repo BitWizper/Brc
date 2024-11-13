@@ -4,27 +4,45 @@ document.addEventListener("DOMContentLoaded", () => {
     const buscarIdInput = document.querySelector("#buscar-id");
     const actualizarCategoriaBtn = document.querySelector("#actualizar-categoria-btn");
     const crearCategoriaBtn = document.querySelector("#crear-categoria-btn");
+    const prevPageBtn = document.getElementById("prev-page");
+    const nextPageBtn = document.getElementById("next-page");
+    const pageInfo = document.getElementById("page-info");
+
+    let categorias = []; // Almacena todas las categorías obtenidas
+    let currentPage = 1;
+    const itemsPerPage = 500;
 
     async function obtenerCategorias() {
         try {
             const response = await fetch('https://brc.onrender.com/api/categoria/obtenercategorias');
             if (!response.ok) throw new Error(`Error en la solicitud: ${response.status}`);
             
-            const categorias = await response.json();
-            mostrarCategorias(categorias);
+            categorias = await response.json();
+            renderPage(currentPage); // Mostrar la primera página
         } catch (error) {
             console.error("Error al obtener categorías:", error);
             tablaCategorias.innerHTML = `<tr><td colspan="3">Error al cargar categorías: ${error.message}</td></tr>`;
         }
     }
 
-    function mostrarCategorias(categorias) {
-        if (!categorias || categorias.length === 0) {
+    function renderPage(page) {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const pageItems = categorias.slice(start, end);
+
+        mostrarCategorias(pageItems);
+        pageInfo.textContent = `Página ${page}`;
+        prevPageBtn.disabled = page === 1;
+        nextPageBtn.disabled = end >= categorias.length;
+    }
+
+    function mostrarCategorias(pageItems) {
+        if (!pageItems || pageItems.length === 0) {
             tablaCategorias.innerHTML = '<tr><td colspan="3">No hay categorías para mostrar.</td></tr>';
             return;
         }
 
-        const categoriasHTML = categorias.map(categoria => `
+        const categoriasHTML = pageItems.map(categoria => `
             <tr>
                 <td>${categoria.id_categoria}</td>
                 <td>${categoria.nombre}</td>
@@ -41,6 +59,25 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
+
+    prevPageBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPage(currentPage);
+        }
+    });
+
+    nextPageBtn.addEventListener("click", () => {
+        if (currentPage * itemsPerPage < categorias.length) {
+            currentPage++;
+            renderPage(currentPage);
+        }
+    });
+
+    buscarCategoriaBtn.addEventListener("click", () => {
+        const id = buscarIdInput.value;
+        if (id) obtenerCategoriaPorId(id);
+    });
 
     async function eliminarCategoria(id) {
         try {
@@ -68,11 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
             tablaCategorias.innerHTML = `<tr><td colspan="3">Error al cargar categoría: ${error.message}</td></tr>`;
         }
     }
-
-    buscarCategoriaBtn.addEventListener("click", () => {
-        const id = buscarIdInput.value;
-        if (id) obtenerCategoriaPorId(id);
-    });
 
     async function actualizarCategoria(id, data) {
         try {
