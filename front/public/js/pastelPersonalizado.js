@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let pastelesPersonalizados = []; // Almacena todos los pasteles personalizados obtenidos
     let currentPage = 1;
-    const itemsPerPage = 500;
+    const itemsPerPage = 10;
 
     async function obtenerPastelesPersonalizados() {
         try {
